@@ -31,7 +31,6 @@ func NewCustomerController(service service.CustomerService) CustomerController {
 }
 
 func (*controller) GetCustomers(response http.ResponseWriter, request *http.Request) {
-	// response.Header().Set("Content-Type", "application/json")
 	customers, err := customerService.FindAll()
 	if err != nil {
 		response.WriteHeader(http.StatusInternalServerError)
@@ -42,11 +41,8 @@ func (*controller) GetCustomers(response http.ResponseWriter, request *http.Requ
 }
 
 func (*controller) AddCustomer(response http.ResponseWriter, request *http.Request) {
-	// response.Header().Set("Content-Type", "application/json")
-
 	var customer entity.Customer
 	err := json.NewDecoder(request.Body).Decode(&customer)
-
 	if err != nil {
 		response.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(response).Encode(errors.ServiceError{Message: "Error unmarshalling data"})
@@ -71,8 +67,6 @@ func (*controller) AddCustomer(response http.ResponseWriter, request *http.Reque
 }
 
 func (*controller) GetCustomer(response http.ResponseWriter, request *http.Request) {
-	response.Header().Set("Content-Type", "application/json")
-
 	var customer *entity.Customer
 	vars := mux.Vars(request)
 	pid, err := strconv.ParseUint(vars["id"], 10, 64)
@@ -88,8 +82,6 @@ func (*controller) GetCustomer(response http.ResponseWriter, request *http.Reque
 }
 
 func (*controller) UpdateCustomer(response http.ResponseWriter, request *http.Request) {
-	// response.Header().Set("Content-Type", "application/json")
-
 	var customer *entity.Customer
 
 	err := json.NewDecoder(request.Body).Decode(&customer)
@@ -121,8 +113,6 @@ func (*controller) UpdateCustomer(response http.ResponseWriter, request *http.Re
 }
 
 func (*controller) DeleteCustomer(response http.ResponseWriter, request *http.Request) {
-	// response.Header().Set("Content-Type", "application/json")
-
 	var customer *entity.Customer
 	vars := mux.Vars(request)
 	pid, err := strconv.ParseUint(vars["id"], 10, 64)
